@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import './App.css';
 import MovieCard from './components/MovieCard';
 
 export default function App() {
@@ -16,12 +15,15 @@ export default function App() {
   }, []);
 
   return (
-    <ul>
-      {movieList.map((movie) => (
-        <MovieCard movie={movie} key={movie.id} />
-      ))}
-    </ul>
+    <>
+      <nav>
+        <h1>무우우우우우비</h1>
+      </nav>
+      <ul className='list-none p-8 flex flex-wrap gap-4'>
+        {movieList.map((movie) => (
+          <MovieCard movie={movie} key={movie.id} />
+        ))}
+      </ul>
+    </>
   );
 }
-
-// https://image.tmdb.org/t/p/w400/4xJd3uwtL1vCuZgEfEc8JXI9Uyx.jpg
