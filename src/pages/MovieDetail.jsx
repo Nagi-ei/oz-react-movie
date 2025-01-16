@@ -13,7 +13,6 @@ export default function MovieDetail() {
       const response = await fetch('/src/assets/data/movieDetailData.json');
       const data = await response.json();
       setMovie(data);
-      console.log(data);
     };
     fetchDetail();
   }, []);
