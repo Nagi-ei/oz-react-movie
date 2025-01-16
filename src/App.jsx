@@ -1,29 +1,30 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import MovieCard from './components/MovieCard';
+import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router';
+import MovieDetail from './pages/MovieDetail';
+import Home from './pages/Home';
+import NavBar from './components/Navbar';
+import Layout from './components/Layout';
 
 export default function App() {
   const [movieList, setMovieList] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchList = async () => {
       const response = await fetch('/src/assets/data/movieListData.json');
       const data = await response.json();
       setMovieList(data.results);
     };
-    fetchData();
+    fetchList();
   }, []);
 
   return (
     <>
-      <nav>
-        <h1>무우우우우우비</h1>
-      </nav>
-      <ul className='list-none p-8 flex flex-wrap gap-4'>
-        {movieList.map((movie) => (
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
-      </ul>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home movieList={movieList} />} />
+          <Route path='/details' element={<MovieDetail />} />
+        </Route>
+      </Routes>
     </>
   );
 }
