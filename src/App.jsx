@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { useEffect } from 'react';
+import './App.css';
+import MovieCard from './components/MovieCard';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [movieList, setMovieList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/src/assets/data/movieListData.json');
+      const data = await response.json();
+      setMovieList(data.results);
+    };
+    fetchData();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ul>
+      {movieList.map((movie) => (
+        <MovieCard movie={movie} key={movie.id} />
+      ))}
+    </ul>
+  );
 }
 
-export default App
+// https://image.tmdb.org/t/p/w400/4xJd3uwtL1vCuZgEfEc8JXI9Uyx.jpg
