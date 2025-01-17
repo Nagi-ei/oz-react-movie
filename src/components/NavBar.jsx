@@ -9,12 +9,13 @@ export default function NavBar() {
   const onSearch = (e) => {
     e.preventDefault();
     setQuery(e.target.value);
+    console.log(e.target.value);
   };
 
   return (
-    <header className='flex justify-between items-center px-4 py-2 bg-zinc-300'>
-      <div className='flex gap-2 items-center'>
-        <h1 className='text-4xl font-extrabold mr-4'>
+    <header className='flex items-center justify-between px-4 py-2 bg-zinc-300'>
+      <div className='flex items-center gap-2'>
+        <h1 className='mr-4 text-4xl font-extrabold'>
           <Link to={'/'}>Movie Tracker</Link>
         </h1>
         <nav>찜 / 본거</nav>
@@ -31,10 +32,10 @@ export default function NavBar() {
         <button onSubmit={onSearch}>🔍</button>
       </form>
       <div>
-        <button className='mx-2 px-2 py-1 bg-zinc-400 rounded-xl'>
+        <button className='px-2 py-1 mx-2 bg-zinc-400 rounded-xl'>
           Sign-in
         </button>
-        <button className='mx-2 px-2 py-1 bg-zinc-400 rounded-xl'>
+        <button className='px-2 py-1 mx-2 bg-zinc-400 rounded-xl'>
           Sign-up
         </button>
       </div>

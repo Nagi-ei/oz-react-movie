@@ -5,12 +5,13 @@ export default function MovieCard({ movie }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/details');
+    console.log(movie);
+    navigate(`/details/${movie.id}`);
   };
 
   return (
     <li
-      className='flex flex-col gap-2 border hover:cursor-pointer'
+      className='flex flex-col gap-2 border hover:cursor-pointer w-[300px]'
       onClick={handleClick}
     >
       <div className='overflow-hidden'>

@@ -26,7 +26,7 @@ export default function Slide({ movieList }) {
       slidesPerView={3}
       effect='coverflow'
       onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
+      // onSwiper={(swiper) => console.log(swiper)}
       className='bg-[#00000080]'
     >
       {movieList.map((m) => (
