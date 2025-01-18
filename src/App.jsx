@@ -1,42 +1,39 @@
-import { useState, useEffect } from 'react';
+import useFetch from './hooks/useFetch';
 import { Route, Routes } from 'react-router';
-import MovieDetail from './pages/MovieDetail';
-import Home from './pages/Home';
 import Layout from './components/Layout';
+import Home from './pages/Home';
+import MovieDetail from './pages/MovieDetail';
 
 export default function App() {
-  const [movieList, setMovieList] = useState([]);
-
   const MOVIE_LIST_POPULAR =
     'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}}`,
+      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
     },
   };
 
-  // console.log(import.meta.env.VITE_API_KEY);
+  const { data, isLoading, error } = useFetch(MOVIE_LIST_POPULAR, options);
+  // console.log(error);
 
-  useEffect(() => {
-    const fetchList = async () => {
-      const response = await fetch(MOVIE_LIST_POPULAR, options);
-      const data = await response.json();
-      setMovieList(data.results);
-      // console.log(data.results);
-    };
-    fetchList();
-  }, [MOVIE_LIST_POPULAR]);
+  // 임시
+  if (isLoading) return <h2>로오딩...</h2>;
+  if (error) return <h2>에러!!</h2>;
 
   return (
     <>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<Home movieList={movieList} />} />
+          <Route index element={<Home movieList={data} />} />
           <Route path='/details/:id' element={<MovieDetail />} />
         </Route>
       </Routes>
     </>
   );
 }
+
+// 슬라이드를 여러개 띄우기 (각각 다른 주제로 데이터를 받아와서)
+// 가장 밑엔 무한 스크롤 (내릴때 로딩)
+// 그럼 데이터를 여러개 fetching 해와야 하니까 Promise.all ? (그럼 useFetch 수정해야하나)

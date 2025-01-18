@@ -25,6 +25,9 @@ export default function MovieDetail() {
     fetchDetail();
   }, []);
 
+  // 홈페이지 링크 정도 더 추가하기
+  // MOVIES - Similar 에서 비슷한 영화 긁어서 아래 목록 띄워주기
+
   return (
     <main className='flex p-12'>
       <img
