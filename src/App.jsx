@@ -19,14 +19,17 @@ export default function App() {
   // console.log(error);
 
   // 임시
-  if (isLoading) return <h2>로오딩...</h2>;
+  // if (isLoading) return <h2>로오딩...</h2>;
   if (error) return <h2>에러!!</h2>;
 
   return (
     <>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<Home movieList={data} />} />
+          <Route
+            index
+            element={<Home movieList={data} isLoading={isLoading} />}
+          />
           <Route path='/details/:id' element={<MovieDetail />} />
         </Route>
       </Routes>

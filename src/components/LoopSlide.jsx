@@ -21,6 +21,15 @@ export default function LoopSlide({ movieList }) {
       }}
       navigation={true}
       modules={[Pagination, Navigation]}
+      style={{
+        // 나중에 이걸로 스타일 수정
+        '--swiper-navigation-size': '44px',
+        '--swiper-navigation-top-offset': '50%',
+        '--swiper-navigation-sides-offset': '10px',
+        // '--swiper-navigation-color': 'white',
+        // '--swiper-pagination-color': 'white',
+        '--swiper-theme-color': 'white',
+      }}
       className='mySwiper'
     >
       {movieList.map((movie) => (

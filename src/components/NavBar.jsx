@@ -13,12 +13,12 @@ export default function NavBar() {
   };
 
   return (
-    <header className='flex items-center justify-between px-4 py-2 bg-zinc-300'>
+    <header className='flex items-center justify-between px-4 py-2 bg-black'>
       <div className='flex items-center gap-2'>
-        <h1 className='mr-4 text-4xl font-extrabold'>
+        <h1 className='mr-4 font-sans text-4xl font-thin text-white'>
           <Link to={'/'}>Movie Tracker</Link>
         </h1>
-        <nav>찜 / 본거</nav>
+        <nav className='text-white'>찜 / 본거</nav>
       </div>
       <form action='submit'>
         <input

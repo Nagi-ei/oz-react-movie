@@ -29,22 +29,22 @@ export default function MovieDetail() {
   // MOVIES - Similar 에서 비슷한 영화 긁어서 아래 목록 띄워주기
 
   return (
-    <main className='flex p-12'>
+    <main className='flex p-12 bg-black text-zinc-400'>
       <img
         src={`https://image.tmdb.org/t/p/w300${movie?.poster_path}`}
         alt=''
       />
       <div className='flex flex-col gap-4 p-4'>
-        <h2 className='pb-2 text-3xl font-bold border-b'>{movie?.title}</h2>
+        <h2 className='pb-2 text-3xl font-bold text-white border-b'>
+          {movie?.title}
+        </h2>
         <span>
           ⭐️ {movie?.vote_average} // {movie?.release_date} // {movie?.runtime}{' '}
           m
         </span>
         <ul className='flex justify-end gap-2'>
           {movie?.genres?.map((g) => (
-            <span key={g.id} className='px-2 py-1 bg-slate-300 rounded-xl'>
-              {g.name}
-            </span>
+            <span key={g.id}>#{g.name}</span>
           ))}
         </ul>
         <p className='pt-2 border-t'>{movie?.overview}</p>

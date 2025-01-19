@@ -8,7 +8,7 @@ export default function SlideCard({ movie }) {
         alt='movie_img'
         className='object-cover w-full'
       />
-      <span className='pb-8 text-lg'>{movie?.title}</span>
+      <span className='pb-8 text-lg text-white'>{movie?.title}</span>
     </div>
   );
 }

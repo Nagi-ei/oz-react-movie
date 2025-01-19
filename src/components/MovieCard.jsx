@@ -11,7 +11,7 @@ export default function MovieCard({ movie }) {
 
   return (
     <li
-      className='flex flex-col gap-2 border hover:cursor-pointer w-[300px]'
+      className='flex flex-col gap-2 hover:cursor-pointer w-[300px]'
       onClick={handleClick}
     >
       <div className='overflow-hidden'>
@@ -21,8 +21,8 @@ export default function MovieCard({ movie }) {
           className='w-[300px] h-[420px] object-cover hover:scale-110 ease-in duration-100'
         />
       </div>
-      <span className='text-xl font-bold'>{movie.title}</span>
-      <span className='text-right'>평균 ⭐️ : {movie.vote_average}</span>
+      <span className='text-xl font-bold text-white'>{movie.title}</span>
+      <span className='text-right text-white'>⭐️ {movie.vote_average}</span>
     </li>
   );
 }
