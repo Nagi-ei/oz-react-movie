@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+import useDebounce from '../hooks/useDebounce';
 
 export default function NavBar() {
   const [query, setQuery] = useState('');
@@ -13,6 +14,8 @@ export default function NavBar() {
     // console.log(query);
     navigate(`/search?movie=${query}`);
   };
+
+  useDebounce(() => navigate(`/search?movie=${query}`), 3000, [query]);
 
   return (
     <header className='flex items-center justify-between px-4 py-2 bg-black'>
