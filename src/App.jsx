@@ -16,6 +16,7 @@ export default function App() {
   };
 
   const { data, isLoading, error } = useFetch(MOVIE_LIST_POPULAR, options);
+  console.log(data);
   // console.log(error);
 
   // 임시

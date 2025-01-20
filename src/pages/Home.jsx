@@ -8,9 +8,18 @@ export default function Home({ movieList, isLoading }) {
     return (
       <main className='bg-black'>
         <ul className='flex flex-wrap gap-4 p-8 list-none'>
-          {Array(20).map((e) => (
-            <MovieCardSkeleton />
-          ))}
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
         </ul>
       </main>
     );
@@ -19,9 +28,11 @@ export default function Home({ movieList, isLoading }) {
     <main className='bg-black'>
       <LoopSlide movieList={movieList} />
       <ul className='flex flex-wrap gap-4 p-8 list-none'>
-        {movieList.map((movie) => (
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
+        {movieList
+          .filter((movie) => movie.adult === false)
+          .map((movie) => (
+            <MovieCard movie={movie} key={movie.id} />
+          ))}
       </ul>
     </main>
   );
