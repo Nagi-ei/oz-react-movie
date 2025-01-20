@@ -1,15 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 export default function NavBar() {
   const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
   // input : 현재 controlled component, 검색 기능 없음
   const onSearch = (e) => {
     e.preventDefault();
-    setQuery(e.target.value);
-    console.log(e.target.value);
+    console.log(e.target.query.value);
+    // console.log(query);
+    navigate(`/search?movie=${query}`);
   };
 
   return (
@@ -20,16 +22,17 @@ export default function NavBar() {
         </h1>
         <nav className='text-white'>찜 / 본거</nav>
       </div>
-      <form action='submit'>
+      <form action='/submit' onSubmit={onSearch}>
         <input
           type='text'
+          name='query'
           placeholder='Search...'
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
           }}
         />
-        <button onSubmit={onSearch}>🔍</button>
+        <button>🔍</button>
       </form>
       <div>
         <button className='px-2 py-1 mx-2 bg-zinc-400 rounded-xl'>

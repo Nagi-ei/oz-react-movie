@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import MovieDetail from './pages/MovieDetail';
+import SearchResult from './pages/SearchResult';
 
 export default function App() {
   const MOVIE_LIST_POPULAR =
@@ -31,6 +32,7 @@ export default function App() {
             index
             element={<Home movieList={data} isLoading={isLoading} />}
           />
+          <Route path='/search?' element={<SearchResult />} />
           <Route path='/details/:id' element={<MovieDetail />} />
         </Route>
       </Routes>

@@ -32,7 +32,7 @@ export default function MovieDetail() {
     <main className='flex p-12 bg-black text-zinc-400'>
       <img
         src={`https://image.tmdb.org/t/p/w300${movie?.poster_path}`}
-        alt=''
+        alt='poster'
       />
       <div className='flex flex-col gap-4 p-4'>
         <h2 className='pb-2 text-3xl font-bold text-white border-b'>
