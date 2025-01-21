@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import MovieDetail from './pages/MovieDetail';
 import SearchResult from './pages/SearchResult';
+import { useDarkMode } from './context/DarkModeContext';
 
 export default function App() {
   const MOVIE_LIST_POPULAR =
@@ -21,7 +22,7 @@ export default function App() {
   // console.log(error);
 
   // 임시
-  // if (isLoading) return <h2>로오딩...</h2>;
+  // if (isLoading) return <h2>로오딩...</h2>; // 아직 안끝남. Home 컴포넌트에서 작동하나만 확인함.
   if (error) return <h2>에러!!</h2>;
 
   return (

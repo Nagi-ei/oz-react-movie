@@ -3,10 +3,11 @@ import { useSearchParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import MovieCard from '../components/MovieCard';
+import { useEffect } from 'react';
 
 export default function SearchResult() {
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get('movie'));
+  // console.log(searchParams.get('movie'));
 
   const url = `https://api.themoviedb.org/3/search/movie?query=${searchParams.get(
     'movie'
@@ -20,11 +21,14 @@ export default function SearchResult() {
   };
 
   const { data, isLoading, error } = useFetch(url, options);
-  console.log(data);
+
+  // useEffect(() => {
+
+  // }, [])
 
   if (isLoading)
     return (
-      <main className='bg-black text-zinc-400'>
+      <main className='flex flex-wrap gap-4 p-8 list-none dark:bg-black'>
         <MovieCardSkeleton />
         <MovieCardSkeleton />
         <MovieCardSkeleton />
@@ -32,11 +36,13 @@ export default function SearchResult() {
     );
 
   return (
-    <main className='bg-black text-zinc-400'>
-      <ul className='flex flex-wrap gap-4 p-8 list-none'>
-        {data.map((movie) => (
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
+    <main>
+      <ul className='flex flex-wrap justify-center gap-4 p-8 list-none dark:bg-black'>
+        {data
+          .filter((movie) => movie.adult === false)
+          .map((movie) => (
+            <MovieCard movie={movie} key={movie.id} />
+          ))}
       </ul>
     </main>
   );

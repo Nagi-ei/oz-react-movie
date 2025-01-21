@@ -25,9 +25,10 @@ export default function Home({ movieList, isLoading }) {
     );
   }
   return (
-    <main className='bg-black'>
+    <main className='bg-white dark:bg-black dark:text-white'>
       <LoopSlide movieList={movieList} />
-      <ul className='flex flex-wrap gap-4 p-8 list-none'>
+      <h2 className='mt-12 ml-12 text-4xl'>Popular</h2>
+      <ul className='flex flex-wrap justify-center gap-8 p-6 list-none'>
         {movieList
           .filter((movie) => movie.adult === false)
           .map((movie) => (
