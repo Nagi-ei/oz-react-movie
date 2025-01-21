@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import useDebounce from '../hooks/useDebounce';
 import { useDarkMode } from '../context/DarkModeContext';
+import { Button } from '@/components/ui/button';
+import { Label } from './ui/label';
+import { Switch } from './ui/switch';
 
 export default function NavBar() {
   const [query, setQuery] = useState('');
@@ -31,7 +34,7 @@ export default function NavBar() {
   );
 
   return (
-    <header className='flex items-center justify-between px-4 py-4 dark:bg-black dark:text-white'>
+    <header className='flex items-center justify-between px-4 py-6 dark:bg-black dark:text-white'>
       <div className='flex items-center gap-2'>
         <h1 className='mr-4 font-["Poiret_One"] text-4xl'>
           <Link to={'/'}>Movie Tracker</Link>
@@ -62,19 +65,13 @@ export default function NavBar() {
         />
         <button className='text-2xl'>🔍</button>
       </form>
-      <div>
-        <button
-          className='px-2 py-1 mx-2 bg-zinc-400 rounded-xl'
-          onClick={toggleDarkMode}
-        >
-          {isDarkMode ? 'L' : 'D'}
-        </button>
-        <button className='px-2 py-1 mx-2 dark:bg-red-600 bg-zinc-400 rounded-xl'>
-          Sign-in
-        </button>
-        <button className='px-2 py-1 mx-2 dark:bg-teal-950 rounded-xl'>
-          Sign-up
-        </button>
+      <div className='flex items-center justify-end gap-4'>
+        <div className='flex items-center gap-1'>
+          <Label htmlFor='dark-mode-toggle'>{isDarkMode ? 'L' : 'D'}</Label>
+          <Switch id='dark-mode-toggle' onClick={toggleDarkMode} />
+        </div>
+        <Button>Sign-up</Button>
+        <Button>Sign-in</Button>
       </div>
     </header>
   );

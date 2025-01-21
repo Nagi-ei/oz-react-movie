@@ -1,9 +1,11 @@
+import { Skeleton } from '@/components/ui/skeleton';
+
 export default function MovieCardSkeleton() {
   return (
-    <li className='w-[300px] h-[488px]'>
-      <div className='w-[300px] h-[420px] bg-zinc-600'></div>
-      <div className='h-8 ml-4 border-b w-36 border-zinc-600'></div>
-      <div className='w-20 h-8 ml-4 border-b border-zinc-600'></div>
+    <li className='w-[300px] h-[488px] list-none'>
+      <Skeleton className='w-[300px] h-[420px]'></Skeleton>
+      <Skeleton className='w-48 h-1 mt-8 ml-4'></Skeleton>
+      <Skeleton className='w-24 h-1 mt-8 ml-4 border-b'></Skeleton>
     </li>
   );
 }
