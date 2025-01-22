@@ -8,6 +8,7 @@ import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 import { Input } from '@/components/ui/input';
 import { useMediaQuery } from 'react-responsive';
+import { ChevronLeft } from 'lucide-react';
 
 export default function NavBar() {
   const [query, setQuery] = useState('');
@@ -16,7 +17,6 @@ export default function NavBar() {
 
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
-  // input : 현재 controlled component, 검색 기능 없음
   const onSearch = (e) => {
     e.preventDefault();
     console.log(e.target.query.value);
@@ -41,9 +41,10 @@ export default function NavBar() {
       <header className='fixed top-0 z-10 flex items-center justify-between w-full px-4 py-6 bg-white border-b dark:bg-black dark:text-white dark:border-t-zinc-600 border-t-zinc-300'>
         <Button
           onClick={() => navigate(-1)}
+          variant='outline'
           className='px-3 py-4 rounded-xl lg:hidden'
         >
-          back
+          <ChevronLeft />
         </Button>
         <div className='flex items-center gap-2'>
           <h1 className='sm:mr-4 font-["Poiret_One"] text-2xl sm:text-4xl xl:pl-2'>
@@ -104,12 +105,12 @@ export default function NavBar() {
             </Link>
           </li>
           <li className='w-1/4 py-6 text-center'>
-            <Link to={'/'} className='w-full h-full'>
+            <Link to={'/mylist'} className='w-full h-full'>
               My List
             </Link>
           </li>
           <li className='w-1/4 py-6 text-center'>
-            <Link to={'/'} className='w-full h-full'>
+            <Link to={'/signin'} className='w-full h-full'>
               Profile
             </Link>
           </li>

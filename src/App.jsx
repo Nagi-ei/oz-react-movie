@@ -1,10 +1,11 @@
-import useFetch from './hooks/useFetch';
 import { Route, Routes } from 'react-router';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import MovieDetail from './pages/MovieDetail';
 import SearchResult from './pages/SearchResult';
-import { useDarkMode } from './context/DarkModeContext';
+import SignIn from './pages/Signin';
+import SignUp from './pages/Signup';
+import MyList from './pages/MyList';
 
 export default function App() {
   return (
@@ -14,6 +15,12 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path='/search?' element={<SearchResult />} />
           <Route path='/details/:id' element={<MovieDetail />} />
+          <Route path='/mylist' element={<MyList />}>
+            <Route path='/mylist/favorites' element={<MyList />} />
+            <Route path='/mylist/watched' element={<MyList />} />
+          </Route>
+          <Route path='/signin' element={<SignIn />} />
+          <Route path='/signup' element={<SignUp />} />
         </Route>
       </Routes>
     </>

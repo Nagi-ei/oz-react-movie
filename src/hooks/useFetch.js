@@ -29,6 +29,7 @@ export default function useFetch(url) {
         } else {
           setData(jsonedData);
         }
+        
       } catch (err) {
         console.log(err);
         setError(err.message); // err? err.message?

@@ -9,7 +9,7 @@ export default function Home() {
 
   const MOVIE_LIST_POPULAR =
     'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
-  const MOVIE_LIST_NOW =
+  const MOVIE_LIST_TOP =
     'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
 
   const {
@@ -17,13 +17,12 @@ export default function Home() {
     isLoading: isLoadingPopular,
     error: errorPopular,
   } = useFetch(MOVIE_LIST_POPULAR);
-  // console.log(errorPopular);
 
   const {
     data: nowMovies,
     isLoading: isLoadingNow,
     error: errorNow,
-  } = useFetch(MOVIE_LIST_NOW);
+  } = useFetch(MOVIE_LIST_TOP);
 
   if (isLoadingPopular || isLoadingNow) {
     return (

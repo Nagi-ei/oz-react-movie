@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import MovieCard from '../components/MovieCard';
-import { useEffect } from 'react';
 
 export default function SearchResult() {
   const skeletonArr = [...new Array(30)].map((_, i) => i + 1);
