@@ -32,8 +32,8 @@ export default function LoopSlide({ movieList }) {
       }}
       className='mySwiper'
     >
-      <h2 className='absolute z-10 mb-6 ml-12 text-4xl top-8 left-0 text-white drop-shadow-[0_0_5px_rgba(0,0,0,1)]'>
-        New
+      <h2 className='absolute z-10 mb-6 ml-6 lg:ml-12 lg:text-4xl top-4 lg:top-8 left-0 text-white drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-2xl'>
+        Top Rated
       </h2>
       {movieList.map((movie) => (
         <SwiperSlide key={movie.id}>

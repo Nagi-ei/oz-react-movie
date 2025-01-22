@@ -28,19 +28,19 @@ export default function SlideCard({ movie }) {
         //   // boxShadow: 'inset 50px 50px 50px 50px #000000',
         // }}
       />
-      <div className='absolute right-24 bottom-[20%] flex flex-col items-end'>
-        <h3 className='pb-4 text-5xl drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
+      <div className='absolute right-12 lg:right-24 bottom-[20%] flex flex-col items-end'>
+        <h3 className='pb-4 lg:text-5xl drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
           {movie?.title}
         </h3>
-        <p className='drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
+        <p className='text-sm lg:text-base drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
           {movie?.release_date}
         </p>
-        <p className='drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
+        <p className='text-sm lg:text-base drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
           ⭐️ {movie?.vote_average}
         </p>
         <button
           onClick={handleClick}
-          className='px-4 py-2 mt-6 text-white transition-all bg-black border border-white rounded-md opacity-50 hover:opacity-100'
+          className='px-4 py-2 mt-6 text-sm text-white transition-all bg-black border border-white rounded-md opacity-50 lg:text-base hover:opacity-100'
         >
           More Info
         </button>

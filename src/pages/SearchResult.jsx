@@ -6,34 +6,37 @@ import MovieCard from '../components/MovieCard';
 import { useEffect } from 'react';
 
 export default function SearchResult() {
+  const skeletonArr = [...new Array(30)].map((_, i) => i + 1);
+
   const [searchParams] = useSearchParams();
   // console.log(searchParams.get('movie'));
 
   const url = `https://api.themoviedb.org/3/search/movie?query=${searchParams.get(
     'movie'
   )}&include_adult=false&language=en-US&page=1`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-    },
-  };
 
-  const { data, isLoading, error } = useFetch(url, options);
+  const { data, isLoading, error } = useFetch(url);
 
-  // useEffect(() => {
-
-  // }, [])
-
-  if (isLoading)
+  if (isLoading) {
     return (
-      <main className='flex flex-wrap gap-4 p-8 list-none dark:bg-black'>
-        <MovieCardSkeleton />
-        <MovieCardSkeleton />
-        <MovieCardSkeleton />
+      <main className='bg-black'>
+        <ul className='flex flex-wrap justify-center gap-4 p-8 list-none'>
+          {skeletonArr.map((n) => (
+            <MovieCardSkeleton key={n} />
+          ))}
+        </ul>
       </main>
     );
+  }
+
+  if (error) {
+    return (
+      <main className='flex flex-col items-center justify-center h-full gap-8'>
+        <h2 className='lg:text-3xl'>Something went wrong! 😅</h2>
+        <p className='text-sm lg:text-base'>( {error} )</p>
+      </main>
+    );
+  }
 
   return (
     <main>

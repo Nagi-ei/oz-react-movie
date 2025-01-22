@@ -7,32 +7,11 @@ import SearchResult from './pages/SearchResult';
 import { useDarkMode } from './context/DarkModeContext';
 
 export default function App() {
-  const MOVIE_LIST_POPULAR =
-    'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-    },
-  };
-
-  const { data, isLoading, error } = useFetch(MOVIE_LIST_POPULAR, options);
-  console.log(data);
-  // console.log(error);
-
-  // 임시
-  // if (isLoading) return <h2>로오딩...</h2>; // 아직 안끝남. Home 컴포넌트에서 작동하나만 확인함.
-  if (error) return <h2>에러!!</h2>;
-
   return (
     <>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route
-            index
-            element={<Home movieList={data} isLoading={isLoading} />}
-          />
+          <Route index element={<Home />} />
           <Route path='/search?' element={<SearchResult />} />
           <Route path='/details/:id' element={<MovieDetail />} />
         </Route>

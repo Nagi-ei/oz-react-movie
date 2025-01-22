@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
 
-export default function useFetch(url, options) {
+export default function useFetch(url) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+    },
+  };
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -16,7 +24,11 @@ export default function useFetch(url, options) {
         }
 
         const jsonedData = await response.json();
-        setData(jsonedData.results);
+        if (jsonedData.results) {
+          setData(jsonedData.results);
+        } else {
+          setData(jsonedData);
+        }
       } catch (err) {
         console.log(err);
         setError(err.message); // err? err.message?

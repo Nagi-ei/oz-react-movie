@@ -2,13 +2,32 @@ import React from 'react';
 import MovieCard from '../components/MovieCard';
 import LoopSlide from '../components/LoopSlide';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
+import useFetch from '@/hooks/useFetch';
 
-export default function Home({ movieList, isLoading }) {
+export default function Home() {
   const skeletonArr = [...new Array(30)].map((_, i) => i + 1);
 
-  if (isLoading) {
+  const MOVIE_LIST_POPULAR =
+    'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
+  const MOVIE_LIST_NOW =
+    'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
+
+  const {
+    data: popularMovies,
+    isLoading: isLoadingPopular,
+    error: errorPopular,
+  } = useFetch(MOVIE_LIST_POPULAR);
+  // console.log(errorPopular);
+
+  const {
+    data: nowMovies,
+    isLoading: isLoadingNow,
+    error: errorNow,
+  } = useFetch(MOVIE_LIST_NOW);
+
+  if (isLoadingPopular || isLoadingNow) {
     return (
-      <main className='bg-black'>
+      <main className='bg-black sm:pt-[88px]'>
         <ul className='flex flex-wrap justify-center gap-4 p-8 list-none'>
           {skeletonArr.map((n) => (
             <MovieCardSkeleton key={n} />
@@ -17,12 +36,24 @@ export default function Home({ movieList, isLoading }) {
       </main>
     );
   }
+
+  if (errorPopular || errorNow) {
+    return (
+      <main className='flex flex-col items-center justify-center h-full gap-8 sm:pt-[88px]'>
+        <h2 className='lg:text-3xl'>Something went wrong! 😅</h2>
+        <p className='text-sm lg:text-base'>( {error} )</p>
+      </main>
+    );
+  }
+
   return (
-    <main className='dark:text-white dark:bg-black'>
-      <LoopSlide movieList={movieList} />
-      <h2 className='mt-12 ml-12 text-4xl'>Popular</h2>
+    <main className='dark:text-white dark:bg-black pt-[88px]'>
+      <LoopSlide movieList={nowMovies} />
+      <h2 className='mt-6 ml-6 text-2xl lg:mt-12 lg:ml-12 lg:text-4xl'>
+        Popular
+      </h2>
       <ul className='flex flex-wrap justify-center gap-8 p-6 list-none'>
-        {movieList
+        {popularMovies
           .filter((movie) => movie.adult === false)
           .map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
