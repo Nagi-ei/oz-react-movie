@@ -9,7 +9,7 @@ export default function useFetch(url) {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
 
@@ -29,7 +29,6 @@ export default function useFetch(url) {
         } else {
           setData(jsonedData);
         }
-        
       } catch (err) {
         console.log(err);
         setError(err.message); // err? err.message?

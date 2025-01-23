@@ -6,8 +6,17 @@ import SearchResult from './pages/SearchResult';
 import SignIn from './pages/Signin';
 import SignUp from './pages/Signup';
 import MyList from './pages/MyList';
+import { useSupabaseAuth } from './hooks/useSupabaseAuth';
+import { useEffect } from 'react';
 
 export default function App() {
+  const { handleAuthSession } = useSupabaseAuth();
+
+  // 리다이렉션 후 페이지에서 로그인
+  useEffect(() => {
+    handleAuthSession();
+  }, []);
+
   return (
     <>
       <Routes>

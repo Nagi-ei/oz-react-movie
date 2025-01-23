@@ -10,8 +10,30 @@ import {
 import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
 import ValidationRow from '@/components/ValidationRow';
+import { useState } from 'react';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 
 export default function SignIn() {
+  // const [user, setUser] = useState(null);
+
+  // const handleSignInWithGoogle = async () => {
+  //   const { data, error } = await supabase.auth.signInWithOAuth({
+  //     provider: 'google',
+  //   });
+  //   setUser(data);
+  // };
+
+  // const handleSignOut = async () => {
+  //   const data = await supabase.auth.signOut();
+  //   const user = await supabase.auth.getUser();
+  //   console.log(data);
+  //   console.log(user);
+  // };
+
+  // console.log(user);
+
+  const { login, logout, loginWithKakao, loginWithGoogle } = useSupabaseAuth();
+
   return (
     <main className='flex items-center justify-center h-full px-4 grow'>
       <Card className='w-full h-min lg:w-4/5 max-w-[800px]'>
@@ -32,7 +54,21 @@ export default function SignIn() {
           </form>
         </CardContent>
         <CardFooter>
-          <span>소셜 로그인 자리</span>
+          <Button
+            onClick={() => {
+              console.log(loginWithGoogle());
+              loginWithGoogle();
+            }}
+          >
+            Sign in With Google
+          </Button>
+          <Button onClick={loginWithKakao}>Sign in With Kakao</Button>
+          <Button onClick={logout}>Sign out</Button>
+          {localStorage.getItem('userInfo') ? (
+            <span>로그인됨</span>
+          ) : (
+            <span>로그아웃됨</span>
+          )}
         </CardFooter>
       </Card>
     </main>

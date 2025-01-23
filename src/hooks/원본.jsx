@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext } from 'react';
 
 // localStorage Key
 const USER_INFO_KEY = 'userInfo';
@@ -48,9 +48,9 @@ const dto = ({ type, rawData }) => {
           profileImageUrl: userInfo.avatar_url,
         },
       };
-
     case DTO_TYPE.error:
       const { error: rawError } = rawData;
+
       return {
         error: {
           status: rawError.status,
@@ -166,8 +166,7 @@ export const useSupabaseAuth = () => {
   // 구글 로그인
   const loginWithGoogle = async (redirectTo = null, ...otherOptions) => {
     try {
-      // 여기서 리다이렉션?
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { _, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo,
@@ -175,25 +174,9 @@ export const useSupabaseAuth = () => {
         },
       });
       if (error) throw new Error(error);
-
-      // 이부분은 안 가는듯해서 삭제
+      return await getUserInfo();
     } catch (error) {
       throw new Error(error);
-    }
-  };
-
-  const handleAuthSession = async () => {
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.getSession();
-    if (session) {
-      const userData = await supabase.auth.getUser();
-      const { user } = dto({
-        type: !userData.error ? DTO_TYPE.user : DTO_TYPE.error,
-        rawData: userData,
-      });
-      setItemToLocalStorage(USER_INFO_KEY, { user });
     }
   };
 
@@ -203,6 +186,5 @@ export const useSupabaseAuth = () => {
     logout,
     loginWithKakao,
     loginWithGoogle,
-    handleAuthSession,
   };
 };

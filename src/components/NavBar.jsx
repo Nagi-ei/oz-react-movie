@@ -3,18 +3,24 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import useDebounce from '../hooks/useDebounce';
 import { useDarkMode } from '../context/DarkModeContext';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 import { Input } from '@/components/ui/input';
-import { useMediaQuery } from 'react-responsive';
 import { ChevronLeft } from 'lucide-react';
+import { useSupabase } from '@/hooks/useSupabaseAuth';
+import { Popover } from '@radix-ui/react-popover';
+import { PopoverTrigger } from '@radix-ui/react-popover';
+import { PopoverContent } from '@radix-ui/react-popover';
+import { Avatar } from './ui/avatar';
+import { AvatarImage } from '@radix-ui/react-avatar';
 
 export default function NavBar() {
   const [query, setQuery] = useState('');
   const [isSearchBarOn, setSearchBarOn] = useState(false);
   const navigate = useNavigate();
 
+  const supabase = useSupabase();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   const onSearch = (e) => {
@@ -35,6 +41,8 @@ export default function NavBar() {
     3000,
     [query]
   );
+
+  console.log(localStorage.getItem('userInfo'));
 
   return (
     <>
@@ -83,8 +91,45 @@ export default function NavBar() {
             <Label htmlFor='dark-mode-toggle'>{isDarkMode ? 'L' : 'D'}</Label>
             <Switch id='dark-mode-toggle' onClick={toggleDarkMode} />
           </div>
-          <Button className='max-lg:hidden'>Sign-up</Button>
-          <Button className='max-lg:hidden'>Sign-in</Button>
+          {supabase.auth.getUser() ? (
+            <Popover>
+              <PopoverTrigger className='max-lg:hidden'>
+                <Avatar>
+                  <AvatarImage src={`${supabase.auth.user}`} alt='Avatar' />
+                </Avatar>
+              </PopoverTrigger>
+              <PopoverContent className='flex flex-col gap-2 px-3 py-4 mx-1 mt-3 rounded-md bg-zinc-300 dark:bg-zinc-600'>
+                <Link
+                  to={'/profile'}
+                  className={`${buttonVariants({
+                    variant: 'outline',
+                  })}`}
+                >
+                  Profile
+                </Link>
+                <Button>Sign-out</Button>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <div className='flex gap-2 max-lg:hidden'>
+              <Link
+                to={'/signup'}
+                className={`${buttonVariants({
+                  variant: 'outline',
+                })} max-lg:hidden`}
+              >
+                Sign-up
+              </Link>
+              <Link
+                to={'/signin'}
+                className={`${buttonVariants({
+                  variant: 'outline',
+                })} max-lg:hidden`}
+              >
+                Sign-in
+              </Link>
+            </div>
+          )}
         </div>
       </header>
       <nav className='fixed bottom-0 z-10 w-full bg-white border-t lg:hidden dark:bg-black dark:border-t-zinc-600 border-t-zinc-300'>

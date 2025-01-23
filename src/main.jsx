@@ -4,13 +4,16 @@ import './index.css';
 import App from './App.jsx';
 import { BrowserRouter } from 'react-router';
 import { DarkModeProvider } from './context/DarkModeContext.jsx';
+import { SupabaseProvider } from './hooks/useSupabaseAuth';
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
   <BrowserRouter>
-    <DarkModeProvider>
-      <App />
-    </DarkModeProvider>
+    <SupabaseProvider>
+      <DarkModeProvider>
+        <App />
+      </DarkModeProvider>
+    </SupabaseProvider>
   </BrowserRouter>
   // </StrictMode>
 );
