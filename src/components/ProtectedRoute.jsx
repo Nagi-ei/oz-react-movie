@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }) {
 
   if (!user) {
     // 로그인 후 원래 가려던 페이지로 리다이렉션하기 위해 state로 전달
-    return <Navigate to='/' state={{ from: location }} replace />;
+    return <Navigate to='/signin' state={{ from: location }} replace />;
   }
 
   return children;
