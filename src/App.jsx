@@ -3,7 +3,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import MovieDetail from './pages/MovieDetail';
 import SearchResult from './pages/SearchResult';
-import SignIn from './pages/SignIn';
+import SignIn from './pages/Signin';
 import SignUp from './pages/SignUp';
 import MyList from './pages/MyList';
 import { useSupabaseAuth } from './hooks/useSupabaseAuth';
