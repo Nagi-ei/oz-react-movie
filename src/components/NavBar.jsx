@@ -8,19 +8,21 @@ import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 import { Input } from '@/components/ui/input';
 import { ChevronLeft } from 'lucide-react';
-import { useSupabase } from '@/hooks/useSupabaseAuth';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 import { Popover } from '@radix-ui/react-popover';
 import { PopoverTrigger } from '@radix-ui/react-popover';
 import { PopoverContent } from '@radix-ui/react-popover';
 import { Avatar } from './ui/avatar';
 import { AvatarImage } from '@radix-ui/react-avatar';
+import { useUser } from '../context/UserContext';
 
 export default function NavBar() {
   const [query, setQuery] = useState('');
   const [isSearchBarOn, setSearchBarOn] = useState(false);
   const navigate = useNavigate();
 
-  const supabase = useSupabase();
+  const { user } = useUser();
+  const { logout } = useSupabaseAuth();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   const onSearch = (e) => {
@@ -41,8 +43,6 @@ export default function NavBar() {
     3000,
     [query]
   );
-
-  console.log(localStorage.getItem('userInfo'));
 
   return (
     <>
@@ -91,14 +91,15 @@ export default function NavBar() {
             <Label htmlFor='dark-mode-toggle'>{isDarkMode ? 'L' : 'D'}</Label>
             <Switch id='dark-mode-toggle' onClick={toggleDarkMode} />
           </div>
-          {supabase.auth.getUser() ? (
+          {user ? (
             <Popover>
               <PopoverTrigger className='max-lg:hidden'>
                 <Avatar>
-                  <AvatarImage src={`${supabase.auth.user}`} alt='Avatar' />
+                  <AvatarImage src={`${user.profileImageUrl}`} alt='Avatar' />
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className='flex flex-col gap-2 px-3 py-4 mx-1 mt-3 rounded-md bg-zinc-300 dark:bg-zinc-600'>
+                <span className='text-center'>{user.userName}</span>
                 <Link
                   to={'/profile'}
                   className={`${buttonVariants({
@@ -107,13 +108,13 @@ export default function NavBar() {
                 >
                   Profile
                 </Link>
-                <Button>Sign-out</Button>
+                <Button onClick={logout}>Sign-out</Button>
               </PopoverContent>
             </Popover>
           ) : (
             <div className='flex gap-2 max-lg:hidden'>
               <Link
-                to={'/signup'}
+                to='/signup'
                 className={`${buttonVariants({
                   variant: 'outline',
                 })} max-lg:hidden`}
@@ -121,7 +122,7 @@ export default function NavBar() {
                 Sign-up
               </Link>
               <Link
-                to={'/signin'}
+                to='/signin'
                 className={`${buttonVariants({
                   variant: 'outline',
                 })} max-lg:hidden`}
@@ -132,6 +133,8 @@ export default function NavBar() {
           )}
         </div>
       </header>
+
+      {/* 모바일 네비게이션바 */}
       <nav className='fixed bottom-0 z-10 w-full bg-white border-t lg:hidden dark:bg-black dark:border-t-zinc-600 border-t-zinc-300'>
         <ul className='flex justify-center'>
           <li className='w-1/4 py-6 text-center'>
@@ -155,7 +158,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li className='w-1/4 py-6 text-center'>
-            <Link to={'/signin'} className='w-full h-full'>
+            <Link to={user ? '/profile' : '/signin'} className='w-full h-full'>
               Profile
             </Link>
           </li>

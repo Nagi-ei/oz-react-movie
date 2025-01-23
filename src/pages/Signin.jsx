@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -7,32 +7,35 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
 import ValidationRow from '@/components/ValidationRow';
-import { useState } from 'react';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useUser } from '../context/UserContext';
 
 export default function SignIn() {
-  // const [user, setUser] = useState(null);
+  const { login, loginWithKakao, loginWithGoogle } = useSupabaseAuth();
+  const { user } = useUser();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const handleSignInWithGoogle = async () => {
-  //   const { data, error } = await supabase.auth.signInWithOAuth({
-  //     provider: 'google',
-  //   });
-  //   setUser(data);
-  // };
+  useEffect(() => {
+    if (user) {
+      navigate(location.state?.from?.pathname || '/profile', { replace: true });
+    }
+  }, [user]);
 
-  // const handleSignOut = async () => {
-  //   const data = await supabase.auth.signOut();
-  //   const user = await supabase.auth.getUser();
-  //   console.log(data);
-  //   console.log(user);
-  // };
-
-  // console.log(user);
-
-  const { login, logout, loginWithKakao, loginWithGoogle } = useSupabaseAuth();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login({ email, password });
+      navigate(location.state?.from?.pathname || '/profile', { replace: true });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <main className='flex items-center justify-center h-full px-4 grow'>
@@ -46,29 +49,46 @@ export default function SignIn() {
             </Link>
           </CardDescription>
         </CardHeader>
+
         <CardContent>
-          <form action=''>
-            <ValidationRow name='Email' type='email' />
-            <ValidationRow name='Password' type='password' />
-            <Button className='w-full'>Sign in</Button>
+          <form onSubmit={handleSubmit}>
+            <ValidationRow
+              name='Email'
+              type='email'
+              data={email}
+              setData={setEmail}
+            />
+            <ValidationRow
+              name='Password'
+              type='password'
+              data={password}
+              setData={setPassword}
+            />
+            <Button type='submit' className='w-full'>
+              Sign in
+            </Button>
           </form>
         </CardContent>
-        <CardFooter>
+
+        <CardFooter className='flex justify-center gap-2'>
           <Button
             onClick={() => {
-              console.log(loginWithGoogle());
               loginWithGoogle();
             }}
+            className='grow'
           >
             Sign in With Google
           </Button>
-          <Button onClick={loginWithKakao}>Sign in With Kakao</Button>
-          <Button onClick={logout}>Sign out</Button>
-          {localStorage.getItem('userInfo') ? (
-            <span>로그인됨</span>
-          ) : (
-            <span>로그아웃됨</span>
-          )}
+          <Button
+            onClick={() => {
+              loginWithKakao(null, {
+                scopes: 'profile_nickname profile_image',
+              });
+            }}
+            className='grow'
+          >
+            Sign in With Kakao
+          </Button>
         </CardFooter>
       </Card>
     </main>

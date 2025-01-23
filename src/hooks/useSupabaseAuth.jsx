@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext } from 'react';
+import { useUser } from '../context/UserContext';
 
 // localStorage Key
 const USER_INFO_KEY = 'userInfo';
@@ -35,17 +36,21 @@ const DTO_TYPE = {
   user: 'user',
 };
 
-// User data 매핑용 함수
+// User data 매핑용 함수 (이메일 가입용은 아이디 확인 안하고 만든듯)
 const dto = ({ type, rawData }) => {
   switch (type) {
     case DTO_TYPE.user:
-      const { user_metadata: userInfo } = rawData?.data.user;
+      const userInfo = rawData?.data.user;
       return {
         user: {
-          id: userInfo.sub,
+          id: userInfo.id,
           email: userInfo.email,
-          userName: userInfo.userName,
-          profileImageUrl: userInfo.avatar_url,
+          userName: userInfo.user_metadata.userName
+            ? userInfo.user_metadata.userName
+            : userInfo.email.slice(0, userInfo.email.indexOf('@')),
+          profileImageUrl: userInfo.user_metadata.avatar_url
+            ? userInfo.user_metadata.avatar_url
+            : null,
         },
       };
 
@@ -81,6 +86,7 @@ export const useSupabaseAuth = () => {
   const supabase = useSupabase();
   const { setItemToLocalStorage, removeItemFromLocalStorage } =
     localStorageUtils();
+  const { setUser } = useUser();
 
   // 회원가입
   const signUp = async ({ email, password, ...userData }) => {
@@ -96,29 +102,34 @@ export const useSupabaseAuth = () => {
           },
         },
       });
-
+      console.log(data);
       const { user } = dto({
         type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
         rawData: data,
       });
+      console.log(user);
       setItemToLocalStorage(USER_INFO_KEY, { user });
+      setUser(user);
     } catch (error) {
       throw new Error(error);
     }
   };
 
-  // 로그인
+  // 로그인 (💩)
   const login = async ({ email, password }) => {
     try {
       const data = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+      console.log(data);
       const { user } = dto({
         type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
         rawData: data,
       });
+      console.log(user);
       setItemToLocalStorage(USER_INFO_KEY, { user });
+      setUser(user);
     } catch (error) {
       throw new Error(error);
     }
@@ -127,21 +138,29 @@ export const useSupabaseAuth = () => {
   // 로그아웃
   const logout = async () => {
     removeItemFromLocalStorage(USER_INFO_KEY);
+    setUser(null);
     return await supabase.auth.signOut();
   };
 
-  // 유저 정보 가져오기
+  // 유저 정보 가져오기 (에러 처리 다시)
   const getUserInfo = async () => {
     try {
       const data = await supabase.auth.getUser();
-      if (data.error) throw new Error(error);
+      console.log(data);
+      if (data.error) {
+        console.log(data.error.name);
+        console.log(data.error.message);
+        // throw new Error(data.error);
+      }
 
       const { user } = dto({
         type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
         rawData: data,
       });
       setItemToLocalStorage(USER_INFO_KEY, { user });
+      setUser(user);
     } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   };
@@ -157,7 +176,8 @@ export const useSupabaseAuth = () => {
         },
       });
       if (error) throw new Error(error);
-      return await getUserInfo();
+      // 리턴문에 도달할 수 없음.
+      // return await getUserInfo();
     } catch (error) {
       throw new Error(error);
     }
@@ -175,25 +195,10 @@ export const useSupabaseAuth = () => {
         },
       });
       if (error) throw new Error(error);
-
-      // 이부분은 안 가는듯해서 삭제
+      // 리턴문에 도달할 수 없음.
+      // return await getUserInfo();
     } catch (error) {
       throw new Error(error);
-    }
-  };
-
-  const handleAuthSession = async () => {
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.getSession();
-    if (session) {
-      const userData = await supabase.auth.getUser();
-      const { user } = dto({
-        type: !userData.error ? DTO_TYPE.user : DTO_TYPE.error,
-        rawData: userData,
-      });
-      setItemToLocalStorage(USER_INFO_KEY, { user });
     }
   };
 
@@ -203,6 +208,6 @@ export const useSupabaseAuth = () => {
     logout,
     loginWithKakao,
     loginWithGoogle,
-    handleAuthSession,
+    getUserInfo,
   };
 };

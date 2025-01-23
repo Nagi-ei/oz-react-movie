@@ -10,17 +10,15 @@ import {
 import { Link } from 'react-router';
 import ValidationRow from '@/components/ValidationRow';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/services/supabase';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useState } from 'react';
 
 export default function SignUp() {
-  const signInWithEmail = (e) => {
-    e.preventDefault();
-    // 유효성 검사 (비어있는 인풋에 에러 전달)
-  };
+  const { signUp, loginWithGoogle, loginWithKakao } = useSupabaseAuth();
 
-  const signInWithGoogle = () => {
-    supabase.auth.signInWithOAuth({ provider: 'google' });
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
     <main className='flex items-center justify-center h-full px-4 grow'>
@@ -34,19 +32,47 @@ export default function SignUp() {
             </Link>
           </CardDescription>
         </CardHeader>
+
         <CardContent>
-          <form action=''>
-            <ValidationRow name='Email' type='email' />
-            <ValidationRow name='Password' type='password' />
-            <ValidationRow name='Confirm Password' type='password' />
-            <Button onClick={signInWithEmail} className='w-full'>
-              Sign Up
-            </Button>
+          <form action='/signin' onSubmit={() => signUp({ email, password })}>
+            <ValidationRow
+              name='Email'
+              type='email'
+              data={email}
+              setData={setEmail}
+            />
+            <ValidationRow
+              name='Password'
+              type='password'
+              data={password}
+              setData={setPassword}
+            />
+            <ValidationRow
+              name='Confirm Password'
+              type='password'
+              data={confirmPassword}
+              setData={setConfirmPassword}
+              password={password}
+            />
+            <Button className='w-full'>Sign Up</Button>
           </form>
         </CardContent>
-        <CardFooter>
-          <Button onClick={signInWithGoogle}>Sign in with Google</Button>
-          <span>소셜 회원가입 자리</span>
+
+        <CardFooter className='flex justify-center gap-2'>
+          <Button onClick={loginWithGoogle} className='grow'>
+            Sign up with Google
+          </Button>
+          {/* 이메일 무조건 요청해야만해서 어차피 못함 */}
+          <Button
+            onClick={() => {
+              loginWithKakao(null, {
+                scopes: 'profile_nickname profile_image',
+              });
+            }}
+            className='grow'
+          >
+            Sign up With Kakao
+          </Button>
         </CardFooter>
       </Card>
     </main>

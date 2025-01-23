@@ -8,31 +8,67 @@ import SignUp from './pages/Signup';
 import MyList from './pages/MyList';
 import { useSupabaseAuth } from './hooks/useSupabaseAuth';
 import { useEffect } from 'react';
+import { UserContextProvider } from './context/UserContext';
+import { useUser } from './context/UserContext';
+import Profile from './pages/Profile';
+import ProtectedRoute from './components/ProtectedRoute';
 
-export default function App() {
-  const { handleAuthSession } = useSupabaseAuth();
+function AppRoutes() {
+  const { getUserInfo } = useSupabaseAuth();
+  const { user, setUser } = useUser();
 
-  // 리다이렉션 후 페이지에서 로그인
   useEffect(() => {
-    handleAuthSession();
+    // 리다이렉션 후 페이지에서 로그인
+    getUserInfo();
+
+    // 초기 로드 시 사용자 정보 설정
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))?.user;
+    setUser(userInfo);
   }, []);
 
+  console.log('user:', user);
+
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='/search?' element={<SearchResult />} />
-          <Route path='/details/:id' element={<MovieDetail />} />
-          <Route path='/mylist' element={<MyList />}>
-            <Route path='/mylist/favorites' element={<MyList />} />
-            <Route path='/mylist/watched' element={<MyList />} />
-          </Route>
-          <Route path='/signin' element={<SignIn />} />
-          <Route path='/signup' element={<SignUp />} />
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path='/search?' element={<SearchResult />} />
+        <Route path='/details/:id' element={<MovieDetail />} />
+
+        {/* 인증이 필요한 라우트들 */}
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/mylist'
+          element={
+            <ProtectedRoute>
+              <MyList />
+            </ProtectedRoute>
+          }
+        >
+          <Route path='favorites' element={<MyList />} />
+          <Route path='watched' element={<MyList />} />
         </Route>
-      </Routes>
-    </>
+
+        {/* 인증 관련 페이지들 */}
+        <Route path='/signin' element={<SignIn />} />
+        <Route path='/signup' element={<SignUp />} />
+      </Route>
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <UserContextProvider>
+      <AppRoutes />
+    </UserContextProvider>
   );
 }
 
