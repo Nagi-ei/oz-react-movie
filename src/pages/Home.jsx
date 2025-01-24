@@ -3,12 +3,13 @@ import MovieCard from '../components/MovieCard';
 import LoopSlide from '../components/LoopSlide';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import useFetch from '@/hooks/useFetch';
+import { useState } from 'react';
 
 export default function Home() {
   const skeletonArr = [...new Array(30)].map((_, i) => i + 1);
+  const [page, setPage] = useState(1);
 
-  const MOVIE_LIST_POPULAR =
-    'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
+  const MOVIE_LIST_POPULAR = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`;
   const MOVIE_LIST_TOP =
     'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
 

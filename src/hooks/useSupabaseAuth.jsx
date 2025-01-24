@@ -171,7 +171,7 @@ export const useSupabaseAuth = () => {
       const { _, error } = await supabase.auth.signInWithOAuth({
         provider: 'kakao',
         options: {
-          redirectTo,
+          redirectTo: redirectTo || import.meta.env.VITE_REDIRECT_URL,
           ...otherOptions,
         },
       });
@@ -190,7 +190,7 @@ export const useSupabaseAuth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo,
+          redirectTo: redirectTo || import.meta.env.VITE_REDIRECT_URL,
           ...otherOptions,
         },
       });
