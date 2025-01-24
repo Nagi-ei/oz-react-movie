@@ -102,12 +102,12 @@ export const useSupabaseAuth = () => {
           },
         },
       });
-      console.log(data);
+      // console.log(data);
       const { user } = dto({
         type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
         rawData: data,
       });
-      console.log(user);
+      // console.log(user);
       setItemToLocalStorage(USER_INFO_KEY, { user });
       setUser(user);
     } catch (error) {
@@ -122,12 +122,12 @@ export const useSupabaseAuth = () => {
         email,
         password,
       });
-      console.log(data);
+      // console.log(data);
       const { user } = dto({
         type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
         rawData: data,
       });
-      console.log(user);
+      // console.log(user);
       setItemToLocalStorage(USER_INFO_KEY, { user });
       setUser(user);
     } catch (error) {
@@ -185,6 +185,7 @@ export const useSupabaseAuth = () => {
 
   // 구글 로그인
   const loginWithGoogle = async (redirectTo = null, ...otherOptions) => {
+    console.log(import.meta.env.VITE_REDIRECT_URL);
     try {
       // 여기서 리다이렉션?
       const { error } = await supabase.auth.signInWithOAuth({

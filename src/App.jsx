@@ -51,10 +51,7 @@ function AppRoutes() {
               <MyList />
             </ProtectedRoute>
           }
-        >
-          <Route path='favorites' element={<MyList />} />
-          <Route path='watched' element={<MyList />} />
-        </Route>
+        />
 
         {/* 인증 관련 페이지들 */}
         <Route path='/signin' element={<SignIn />} />
