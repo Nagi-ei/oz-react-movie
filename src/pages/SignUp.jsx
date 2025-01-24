@@ -12,13 +12,25 @@ import ValidationRow from '@/components/ValidationRow';
 import { Button } from '@/components/ui/button';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 export default function SignUp() {
   const { signUp, loginWithGoogle, loginWithKakao } = useSupabaseAuth();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signUp({ email, password });
+      navigate('/', { replace: true }); // 홈으로 리다이렉트
+    } catch (error) {
+      console.error('Sign up failed:', error);
+    }
+  };
 
   return (
     <main className='flex items-center justify-center h-full px-4 grow'>
@@ -34,7 +46,7 @@ export default function SignUp() {
         </CardHeader>
 
         <CardContent>
-          <form action='/signin' onSubmit={() => signUp({ email, password })}>
+          <form action='/signin' onSubmit={handleSubmit}>
             <ValidationRow
               name='Email'
               type='email'
