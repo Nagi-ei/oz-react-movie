@@ -100,14 +100,19 @@ export const useSupabaseAuth = () => {
               'https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295396_1280.png',
             ...userData,
           },
+          emailRedirectTo: import.meta.env.VITE_REDIRECT_URL,
         },
       });
-      // console.log(data);
+
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
+
       const { user } = dto({
         type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
         rawData: data,
       });
-      // console.log(user);
+
       setItemToLocalStorage(USER_INFO_KEY, { user });
       setUser(user);
     } catch (error) {
