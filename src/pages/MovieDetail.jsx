@@ -49,7 +49,7 @@ export default function MovieDetail() {
   }
 
   return (
-    <main className='flex flex-col px-12 py-48 bg-black grow text-zinc-400 lg:pt-96 dark:text-zinc-400 xl:px-36 2xl:px-60'>
+    <main className='flex flex-col px-12 bg-black py-60 md:pt-80 grow text-zinc-400 lg:pt-96 xl:pt-[500px] dark:text-zinc-400 xl:px-36 2xl:px-60'>
       {/* 배경 이미지 */}
       <img
         src={`https://image.tmdb.org/t/p/original${movieDetails?.backdrop_path}`}
@@ -100,7 +100,7 @@ export default function MovieDetail() {
       {/* 비슷한 영화 목록 */}
       <section className='pt-8'>
         <h3 className='text-xl font-semibold lg:text-3xl'>Similar Movies</h3>
-        <ul className='flex flex-wrap justify-center gap-4 p-8 list-none'>
+        <ul className='flex flex-wrap justify-center gap-4 py-8 list-none'>
           {moviesSimilar?.map((m) => (
             <MovieCard key={m.id} movie={m} />
           ))}
