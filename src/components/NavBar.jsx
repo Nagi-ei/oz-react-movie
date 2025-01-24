@@ -54,19 +54,18 @@ export default function NavBar() {
         >
           <ChevronLeft />
         </Button>
-        <div className='flex items-center gap-2'>
-          <h1 className='sm:mr-4 font-["Poiret_One"] text-2xl sm:text-4xl xl:pl-2'>
-            <Link to={'/'}>Movie Archive</Link>
-          </h1>
-          <nav className='flex justify-between w-40 gap-4 mx-4 font-light max-lg:hidden'>
+        <h1 className='sm:mr-4 font-["Poiret_One"] text-2xl sm:text-4xl xl:pl-2'>
+          <Link to={'/'}>Movie Archive</Link>
+        </h1>
+        {/* <nav className='flex justify-between w-40 gap-4 mx-4 font-light max-lg:hidden'>
             <Link to={'/'} className='transition-all hover:font-semibold'>
               Favorites
             </Link>
             <Link to={'/'} className='transition-all hover:font-semibold'>
               Watched
             </Link>
-          </nav>
-        </div>
+          </nav> */}
+
         <form
           action='/submit'
           onSubmit={onSearch}
@@ -86,6 +85,7 @@ export default function NavBar() {
           />
           <button className='text-2xl'>🔍</button>
         </form>
+
         <div className='flex items-center justify-end gap-4'>
           <div className='flex items-center gap-1'>
             <Label htmlFor='dark-mode-toggle'>{isDarkMode ? 'L' : 'D'}</Label>
@@ -100,6 +100,14 @@ export default function NavBar() {
               </PopoverTrigger>
               <PopoverContent className='flex flex-col gap-2 px-3 py-4 mx-1 mt-3 rounded-md bg-zinc-300 dark:bg-zinc-600'>
                 <span className='text-center'>{user.userName}</span>
+                <Link
+                  to={'/mylist'}
+                  className={`${buttonVariants({
+                    variant: 'outline',
+                  })}`}
+                >
+                  My List
+                </Link>
                 <Link
                   to={'/profile'}
                   className={`${buttonVariants({

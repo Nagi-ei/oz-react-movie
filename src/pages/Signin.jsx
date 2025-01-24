@@ -33,7 +33,8 @@ export default function SignIn() {
       await login({ email, password });
       navigate(location.state?.from?.pathname || '/profile', { replace: true });
     } catch (error) {
-      console.error(error);
+      console.error('Sign in failed:', error);
+      // 여기서 에러 메시지를 사용자에게 보여줄 수 있습니다
     }
   };
 

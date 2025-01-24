@@ -4,6 +4,7 @@ import LoopSlide from '../components/LoopSlide';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import useFetch from '@/hooks/useFetch';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Home() {
   const skeletonArr = [...new Array(30)].map((_, i) => i + 1);
@@ -24,6 +25,14 @@ export default function Home() {
     isLoading: isLoadingNow,
     error: errorNow,
   } = useFetch(MOVIE_LIST_TOP);
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      const isScrollAtBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight;
+    }),
+      [];
+  });
 
   if (isLoadingPopular || isLoadingNow) {
     return (
