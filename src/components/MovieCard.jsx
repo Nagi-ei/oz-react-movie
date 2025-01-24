@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
+import MyLIstButton from './MyLIstButton';
 
 export default function MovieCard({ movie }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function MovieCard({ movie }) {
 
   return (
     <li
-      className='flex flex-col gap-2 hover:cursor-pointer w-[45%] md:w-[30%] lg:w-[23%] 2xl:w-[300px] dark:text-white'
+      className='relative flex flex-col gap-2 hover:cursor-pointer w-[45%] md:w-[30%] lg:w-[23%] 2xl:w-[300px] dark:text-white'
       onClick={handleClick}
     >
       <div className='overflow-hidden'>
@@ -24,9 +25,10 @@ export default function MovieCard({ movie }) {
         />
       </div>
       <span className='lg:text-xl'>{movie.title}</span>
-      <span className='text-sm text-right font-extralight lg:text-base'>
+      <span className='text-sm font-extralight lg:text-base'>
         ⭐️ {movie.vote_average}
       </span>
+      <MyLIstButton moreClass='absolute top-2 right-2 z-10' />
     </li>
   );
 }

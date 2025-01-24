@@ -29,7 +29,7 @@ export default function SlideCard({ movie }) {
         // }}
       />
       <div className='absolute right-12 lg:right-24 bottom-[20%] flex flex-col items-end'>
-        <h3 className='pb-4 lg:text-5xl drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
+        <h3 className='pb-4 lg:text-5xl md:text-4xl sm:text-3xl text-xl drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
           {movie?.title}
         </h3>
         <p className='text-sm lg:text-base drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>

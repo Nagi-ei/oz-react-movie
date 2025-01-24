@@ -46,7 +46,7 @@ export default function NavBar() {
 
   return (
     <>
-      <header className='fixed top-0 z-10 flex items-center justify-between w-full px-4 py-6 bg-white border-b dark:bg-black dark:text-white dark:border-t-zinc-600 border-t-zinc-300'>
+      <header className='fixed top-0 z-20 flex items-center justify-between w-full px-4 py-6 bg-white border-b dark:bg-black dark:text-white dark:border-t-zinc-600 border-t-zinc-300'>
         <Button
           onClick={() => navigate(-1)}
           variant='outline'
@@ -57,14 +57,6 @@ export default function NavBar() {
         <h1 className='sm:mr-4 font-["Poiret_One"] text-2xl sm:text-4xl xl:pl-2'>
           <Link to={'/'}>Movie Archive</Link>
         </h1>
-        {/* <nav className='flex justify-between w-40 gap-4 mx-4 font-light max-lg:hidden'>
-            <Link to={'/'} className='transition-all hover:font-semibold'>
-              Favorites
-            </Link>
-            <Link to={'/'} className='transition-all hover:font-semibold'>
-              Watched
-            </Link>
-          </nav> */}
 
         <form
           action='/submit'
@@ -143,31 +135,46 @@ export default function NavBar() {
       </header>
 
       {/* 모바일 네비게이션바 */}
-      <nav className='fixed bottom-0 z-10 w-full bg-white border-t lg:hidden dark:bg-black dark:border-t-zinc-600 border-t-zinc-300'>
-        <ul className='flex justify-center'>
-          <li className='w-1/4 py-6 text-center'>
-            <Link to={'/'} className='w-full h-full'>
+      <nav className='fixed bottom-0 z-20 w-full h-[4.5rem] bg-white border-t lg:hidden dark:bg-black dark:border-t-zinc-600 border-t-zinc-300'>
+        <ul className='flex justify-center h-full'>
+          <li className='w-1/4'>
+            <Link
+              to={'/'}
+              className='flex items-center justify-center w-full h-full'
+            >
               Home
             </Link>
           </li>
-          <li className='w-1/4 py-6 text-center'>
+          <li className='w-1/4'>
             <Link
               onClick={() => {
                 setSearchBarOn((prev) => !prev);
               }}
-              className='w-full h-full'
+              className='flex items-center justify-center w-full h-full'
             >
               Search
             </Link>
           </li>
-          <li className='w-1/4 py-6 text-center'>
-            <Link to={'/mylist'} className='w-full h-full'>
+          <li className='w-1/4'>
+            <Link
+              to={'/mylist'}
+              className='flex items-center justify-center w-full h-full'
+            >
               My List
             </Link>
           </li>
-          <li className='w-1/4 py-6 text-center'>
-            <Link to={user ? '/profile' : '/signin'} className='w-full h-full'>
-              Profile
+          <li className='w-1/4'>
+            <Link
+              to={user ? '/profile' : '/signin'}
+              className='flex items-center justify-center w-full h-full'
+            >
+              {user ? (
+                <Avatar>
+                  <AvatarImage src={`${user.profileImageUrl}`} alt='Avatar' />
+                </Avatar>
+              ) : (
+                'Sign-in'
+              )}
             </Link>
           </li>
         </ul>

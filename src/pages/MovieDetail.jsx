@@ -15,7 +15,7 @@ export default function MovieDetail() {
     data: movieDetails,
     isLoading: isLoadingDetails,
     error: errorDetails,
-  } = useFetch(MOVIES_DETAILS);
+  } = useFetch(MOVIES_DETAILS, [id]);
 
   // MOVIES - Similar
   const MOVIES_SIMILAR = `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`;
@@ -23,7 +23,7 @@ export default function MovieDetail() {
     data: moviesSimilar,
     isLoading: isLoadingSimilar,
     error: errorSimilar,
-  } = useFetch(MOVIES_SIMILAR);
+  } = useFetch(MOVIES_SIMILAR, [id]);
 
   console.log(moviesSimilar);
 

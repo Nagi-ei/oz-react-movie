@@ -5,6 +5,7 @@ import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import useFetch from '@/hooks/useFetch';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import MyLIstButton from '@/components/MyLIstButton';
 
 export default function Home() {
   const skeletonArr = [...new Array(30)].map((_, i) => i + 1);
