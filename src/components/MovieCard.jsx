@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useNavigate } from 'react-router';
 import MyLIstButton from './MyLIstButton';
 
-export default function MovieCard({ movie }) {
+const MovieCard = forwardRef(({ movie }, ref) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -13,6 +13,7 @@ export default function MovieCard({ movie }) {
 
   return (
     <li
+      ref={ref}
       className='relative flex flex-col gap-2 hover:cursor-pointer w-[45%] md:w-[30%] lg:w-[23%] 2xl:w-[300px] dark:text-white'
       onClick={handleClick}
     >
@@ -31,4 +32,6 @@ export default function MovieCard({ movie }) {
       <MyLIstButton moreClass='absolute top-2 right-2 z-10' />
     </li>
   );
-}
+});
+
+export default MovieCard;

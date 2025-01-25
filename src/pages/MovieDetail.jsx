@@ -43,7 +43,12 @@ export default function MovieDetail() {
     return (
       <main className='flex flex-col items-center justify-center h-full gap-8 pt-[88px]'>
         <h2 className='lg:text-3xl'>Something went wrong! 😅</h2>
-        <p className='text-sm lg:text-base'>( {error} )</p>
+        <p className='text-sm lg:text-base'>
+          ( {errorDetails ? errorDetails : ''} )
+        </p>
+        <p className='text-sm lg:text-base'>
+          ( {errorSimilar ? errorSimilar : ''} )
+        </p>
       </main>
     );
   }

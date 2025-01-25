@@ -39,7 +39,7 @@ export default function SearchResult() {
 
   return (
     <main>
-      <ul className='flex flex-wrap justify-center gap-4 p-8 list-none dark:bg-black'>
+      <ul className='flex flex-wrap justify-center gap-4 p-8 list-none pt-28 dark:bg-black'>
         {data
           .filter((movie) => movie.adult === false)
           .map((movie) => (
