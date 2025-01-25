@@ -1,12 +1,12 @@
 import MovieCard from '@/components/MovieCard';
 import MovieCardSkeleton from '@/components/MovieCardSkeleton';
+import MyLIstButton from '@/components/MyLIstButton';
 import useFetch from '@/hooks/useFetch';
 import React from 'react';
 import { useParams } from 'react-router';
 
 export default function MovieDetail() {
   const { id } = useParams();
-  console.log(id);
   const skeletonArr = [...new Array(30)].map((_, i) => i + 1);
 
   // MOVIES - Details
@@ -24,8 +24,6 @@ export default function MovieDetail() {
     isLoading: isLoadingSimilar,
     error: errorSimilar,
   } = useFetch(MOVIES_SIMILAR, [id]);
-
-  console.log(moviesSimilar);
 
   if (isLoadingDetails || isLoadingSimilar) {
     return (
@@ -60,13 +58,18 @@ export default function MovieDetail() {
         src={`https://image.tmdb.org/t/p/original${movieDetails?.backdrop_path}`}
         alt='background image'
         draggable={false}
-        className='absolute left-0 z-0 top-20 blur-sm max-sm:top-20'
+        className='absolute left-0 z-0 w-full top-20 blur-sm max-sm:top-20'
       />
 
-      <h2 className='z-0 pb-4 mb-4 text-2xl lg:text-5xl font-semibold border-b drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
-        {movieDetails?.title}
-      </h2>
+      {/* 영화 제목 */}
+      <div className='z-0 flex items-center justify-between pb-4 mb-4 border-b'>
+        <h2 className='text-2xl lg:text-5xl font-semibold drop-shadow-[0_0_5px_rgba(0,0,0,1)] text-white'>
+          {movieDetails?.title}
+        </h2>
+        <MyLIstButton moreClass={'h-9 opacity-100'} />
+      </div>
 
+      {/* 영화 정보 */}
       <div className='z-0 flex flex-col gap-4 pb-8 border-b lg:gap-8 md:flex-row dark:border-t-zinc-600 border-t-zinc-300'>
         <img
           src={`https://image.tmdb.org/t/p/original${movieDetails?.poster_path}`}

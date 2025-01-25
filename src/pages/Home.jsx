@@ -37,7 +37,7 @@ export default function Home() {
   const targetRef = useRef(null);
   useEffect(() => {
     const observerCallback = (entries) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0].isIntersecting && !isLoadingPopular) {
         setPage((prev) => prev + 1);
       }
     };
@@ -99,4 +99,5 @@ export default function Home() {
   );
 }
 
-// react-intersection-observer 나중에 사용해 보기
+// react-intersection-observer 라이브러리도 나중에 사용해 보기
+// intersection observer는 declarative가 아니라 imperative가 아닐까해서 위 라이브러리가 궁금함.

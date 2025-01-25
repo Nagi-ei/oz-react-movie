@@ -35,3 +35,5 @@ const MovieCard = forwardRef(({ movie }, ref) => {
 });
 
 export default MovieCard;
+
+// 포스터 이미지가 없는 경우 대체 이미지 혹은 대체 컴포넌트 추가하기
